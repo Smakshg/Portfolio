@@ -3,7 +3,7 @@ import { useForm, ValidationError } from "@formspree/react";
 
 export default function Contact() {
   // replace “xvgbnqyw” with your form ID from Formspree
-  const [state, handleSubmit] = useForm("xvgbnqyw");
+  const [state, handleSubmit] = useForm("mwpnjqjw");
   const [submitted, setSubmitted] = useState(false);
 
   const onSubmit = async (e) => {
@@ -103,3 +103,4 @@ export default function Contact() {
     </section>
   );
 }
+
