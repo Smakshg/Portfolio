@@ -1,61 +1,105 @@
 import { useState } from "react";
-import { motion } from "framer-motion";
+import { useForm, ValidationError } from "@formspree/react";
 
 export default function Contact() {
-  const [status, setStatus] = useState("");
+  // replace “xvgbnqyw” with your form ID from Formspree
+  const [state, handleSubmit] = useForm("xvgbnqyw");
+  const [submitted, setSubmitted] = useState(false);
 
-  function handleSubmit(e) {
-    e.preventDefault();
-    const form = e.target;
-    const name = form.name.value;
-    const email = form.email.value;
-    const message = form.message.value;
+  const onSubmit = async (e) => {
+    // Formspree's handleSubmit already takes care of preventing default
+    await handleSubmit(e);
+    if (state.succeeded) {
+      setSubmitted(true);
+    }
+  };
 
-    window.location.href = `mailto:your-email@example.com?subject=Contact from ${name}&body=${message}%0D%0AFrom: ${email}`;
-    setStatus("✅ Your email app should now open.");
-    form.reset();
+  if (submitted) {
+    return (
+      <div className="flex items-center justify-center min-h-screen px-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-800">
+        <div className="bg-white rounded-2xl shadow-xl p-10 max-w-md text-center">
+          <h2 className="text-3xl font-bold mb-4 text-gray-900">Thank you!</h2>
+          <p className="text-gray-700">Your message has been sent. I’ll get back to you soon 😊</p>
+        </div>
+      </div>
+    );
   }
 
   return (
-    <section className="min-h-screen bg-gradient-to-br from-blue-700 via-purple-700 to-pink-700 text-white px-6 py-16">
-      <h1 className="text-4xl font-bold mb-8 text-center">Get in Touch</h1>
-
-      <motion.form
-        onSubmit={handleSubmit}
-        className="bg-white/20 backdrop-blur-lg shadow-xl p-8 rounded-2xl max-w-lg mx-auto space-y-4"
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
+    <section className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-800">
+      <form
+        onSubmit={onSubmit}
+        className="w-full max-w-lg bg-gray-900 bg-opacity-80 p-8 rounded-2xl shadow-xl space-y-6"
       >
-        <input
-          type="text"
-          name="name"
-          placeholder="Your Name"
-          required
-          className="w-full border-0 rounded px-4 py-3 text-gray-900 focus:ring-2 focus:ring-yellow-400"
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Your Email"
-          required
-          className="w-full border-0 rounded px-4 py-3 text-gray-900 focus:ring-2 focus:ring-yellow-400"
-        />
-        <textarea
-          name="message"
-          rows="5"
-          placeholder="Your Message"
-          required
-          className="w-full border-0 rounded px-4 py-3 text-gray-900 focus:ring-2 focus:ring-yellow-400"
-        ></textarea>
+        <h2 className="text-4xl font-bold text-white text-center mb-4">Contact Me</h2>
+
+        <div className="flex flex-col">
+          <label htmlFor="name" className="text-gray-200 mb-1">Your Name</label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            required
+            className="px-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          />
+          <ValidationError
+            prefix="Name"
+            field="name"
+            errors={state.errors}
+            className="text-sm text-red-500 mt-1"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="email" className="text-gray-200 mb-1">Your Email</label>
+          <input
+            id="email"
+            type="email"
+            name="email"
+            required
+            className="px-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          />
+          <ValidationError
+            prefix="Email"
+            field="email"
+            errors={state.errors}
+            className="text-sm text-red-500 mt-1"
+          />
+        </div>
+
+        <div className="flex flex-col">
+          <label htmlFor="message" className="text-gray-200 mb-1">Your Message</label>
+          <textarea
+            id="message"
+            name="message"
+            rows={5}
+            required
+            className="px-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
+          ></textarea>
+          <ValidationError
+            prefix="Message"
+            field="message"
+            errors={state.errors}
+            className="text-sm text-red-500 mt-1"
+          />
+        </div>
+
         <button
           type="submit"
-          className="w-full bg-yellow-400 text-gray-900 font-semibold px-6 py-3 rounded-lg shadow-lg hover:scale-105 transition"
+          disabled={state.submitting}
+          className={`w-full py-3 rounded-lg font-semibold text-gray-900 bg-yellow-400 hover:scale-105 transition ${
+            state.submitting ? "opacity-50 cursor-not-allowed" : ""
+          }`}
         >
-          Send Message
+          {state.submitting ? "Sending..." : "Send Message"}
         </button>
-        {status && <p className="text-green-400 mt-2">{status}</p>}
-      </motion.form>
+
+        {/* optional: show form-level errors */}
+        <ValidationError
+          errors={state.errors}
+          className="text-sm text-red-500"
+        />
+      </form>
     </section>
   );
 }
