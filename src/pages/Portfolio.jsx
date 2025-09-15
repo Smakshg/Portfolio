@@ -92,74 +92,78 @@ export default function Portfolio() {
       </div>
 
       {/* Demo Modal */}
-      <AnimatePresence>
-        {activeDemo && (
-          <motion.div
-            className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-0 md:p-4"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <motion.div
-              className="bg-gray-900 rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] overflow-y-auto relative p-6"
-              initial={{ scale: 0.9 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0.9 }}
-              transition={{ duration: 0.3 }}
+<AnimatePresence>
+  {activeDemo && (
+    <motion.div
+      className="fixed inset-0 bg-black/95 flex items-center justify-center z-50 p-0 md:p-4"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
+      {/* Inner Modal */}
+      <motion.div
+        className="bg-gray-900 rounded-none md:rounded-2xl shadow-2xl w-full md:max-w-5xl h-full md:max-h-[90vh] overflow-y-auto relative p-0 md:p-6"
+        initial={{ scale: 0.95 }}
+        animate={{ scale: 1 }}
+        exit={{ scale: 0.95 }}
+        transition={{ duration: 0.3 }}
+      >
+        {/* Close Button */}
+        <button
+          onClick={() => setActiveDemo(null)}
+          className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-lg z-[10000]"
+        >
+          ✕
+        </button>
+
+        {/* Title */}
+        <h2 className="text-3xl font-bold text-center mb-6 text-yellow-300 sticky top-0 bg-gray-900 py-4 z-50 shadow-md">
+          {activeDemo.title}
+        </h2>
+
+        {/* Layout Navigation */}
+        {activeDemo.layouts.length > 1 && (
+          <div className="flex justify-between items-center mb-4 sticky top-[64px] bg-gray-900 py-2 z-50">
+            <button
+              onClick={handlePrev}
+              className="bg-white/20 px-4 py-2 rounded-lg hover:bg-white/30"
             >
-              {/* Close Button */}
-              <button
-                onClick={() => setActiveDemo(null)}
-                className="absolute top-4 right-4 bg-red-500 text-white px-3 py-1 rounded-lg"
-              >
-                ✕
-              </button>
-
-              {/* Title */}
-              <h2 className="text-3xl font-bold text-center mb-6 text-yellow-300">
-                {activeDemo.title}
-              </h2>
-
-              {/* Layout Navigation */}
-              {activeDemo.layouts.length > 1 && (
-                <div className="flex justify-between items-center mb-4">
-                  <button
-                    onClick={handlePrev}
-                    className="bg-white/20 px-4 py-2 rounded-lg hover:bg-white/30"
-                  >
-                    ◀ Prev
-                  </button>
-                  <p className="text-gray-300">
-                    {activeIndex + 1} / {activeDemo.layouts.length}
-                  </p>
-                  <button
-                    onClick={handleNext}
-                    className="bg-white/20 px-4 py-2 rounded-lg hover:bg-white/30"
-                  >
-                    Next ▶
-                  </button>
-                </div>
-              )}
-
-              {/* Active Layout */}
-              <div className="bg-black/40 rounded-xl p-6">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeIndex}
-                    initial={{ opacity: 0, x: 100 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -100 }}
-                    transition={{ duration: 0.5 }}
-                  >
-                    {activeDemo.layouts[activeIndex]}
-                  </motion.div>
-                </AnimatePresence>
-              </div>
-            </motion.div>
-          </motion.div>
+              ◀ Prev
+            </button>
+            <p className="text-gray-300">
+              {activeIndex + 1} / {activeDemo.layouts.length}
+            </p>
+            <button
+              onClick={handleNext}
+              className="bg-white/20 px-4 py-2 rounded-lg hover:bg-white/30"
+            >
+              Next ▶
+            </button>
+          </div>
         )}
-      </AnimatePresence>
+
+        {/* Active Layout */}
+        <div className="bg-black/40 rounded-xl p-0 md:p-6 w-full h-full">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={activeIndex}
+              initial={{ opacity: 0, x: 100 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -100 }}
+              transition={{ duration: 0.5 }}
+              className="w-full h-full"
+            >
+              {activeDemo.layouts[activeIndex]}
+            </motion.div>
+          </AnimatePresence>
+        </div>
+      </motion.div>
+    </motion.div>
+  )}
+</AnimatePresence>
+
     </div>
   );
 }
+
 
