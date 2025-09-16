@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useForm, ValidationError } from "@formspree/react";
 
 export default function Contact() {
-  // replace “xvgbnqyw” with your form ID from Formspree
+  // replace “xvgbnqyw” with your form ID from Formspre
   const [state, handleSubmit] = useForm("mwpnjqjw");
   const [submitted, setSubmitted] = useState(false);
 
@@ -103,5 +103,6 @@ export default function Contact() {
     </section>
   );
 }
+
 
 
