@@ -1,108 +1,110 @@
-import { useState } from "react";
-import { useForm, ValidationError } from "@formspree/react";
+import { motion } from "framer-motion";
 
 export default function Contact() {
-  // replace “xvgbnqyw” with your form ID from Formspre
-  const [state, handleSubmit] = useForm("mwpnjqjw");
-  const [submitted, setSubmitted] = useState(false);
-
-  const onSubmit = async (e) => {
-    // Formspree's handleSubmit already takes care of preventing default
-    await handleSubmit(e);
-    if (state.succeeded) {
-      setSubmitted(true);
-    }
-  };
-
-  if (submitted) {
-    return (
-      <div className="flex items-center justify-center min-h-screen px-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-800">
-        <div className="bg-white rounded-2xl shadow-xl p-10 max-w-md text-center">
-          <h2 className="text-3xl font-bold mb-4 text-gray-900">Thank you!</h2>
-          <p className="text-gray-700">Your message has been sent. I’ll get back to you soon 😊</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <section className="min-h-screen flex items-center justify-center px-6 bg-gradient-to-r from-blue-600 via-indigo-700 to-purple-800">
-      <form
-        onSubmit={onSubmit}
-        className="w-full max-w-lg bg-gray-900 bg-opacity-80 p-8 rounded-2xl shadow-xl space-y-6"
+    <section className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-black flex items-center justify-center px-6 relative overflow-hidden">
+      {/* Animated background blobs */}
+      <motion.div
+        className="absolute w-[500px] h-[500px] bg-yellow-400/20 rounded-full blur-3xl -top-40 -left-40"
+        animate={{ scale: [1, 1.2, 1] }}
+        transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+      />
+      <motion.div
+        className="absolute w-[400px] h-[400px] bg-pink-500/20 rounded-full blur-3xl bottom-0 right-0"
+        animate={{ scale: [1, 1.3, 1] }}
+        transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
+      />
+
+      <motion.div
+        className="relative z-10 bg-white/10 backdrop-blur-lg border border-white/20 rounded-3xl shadow-2xl p-10 max-w-4xl w-full flex flex-col md:flex-row items-center gap-12"
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8 }}
       >
-        <h2 className="text-4xl font-bold text-white text-center mb-4">Contact Me</h2>
-
-        <div className="flex flex-col">
-          <label htmlFor="name" className="text-gray-200 mb-1">Your Name</label>
-          <input
-            id="name"
-            type="text"
-            name="name"
-            required
-            className="px-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          />
-          <ValidationError
-            prefix="Name"
-            field="name"
-            errors={state.errors}
-            className="text-sm text-red-500 mt-1"
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <label htmlFor="email" className="text-gray-200 mb-1">Your Email</label>
-          <input
-            id="email"
-            type="email"
-            name="email"
-            required
-            className="px-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          />
-          <ValidationError
-            prefix="Email"
-            field="email"
-            errors={state.errors}
-            className="text-sm text-red-500 mt-1"
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <label htmlFor="message" className="text-gray-200 mb-1">Your Message</label>
-          <textarea
-            id="message"
-            name="message"
-            rows={5}
-            required
-            className="px-4 py-3 rounded-lg bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-yellow-400"
-          ></textarea>
-          <ValidationError
-            prefix="Message"
-            field="message"
-            errors={state.errors}
-            className="text-sm text-red-500 mt-1"
-          />
-        </div>
-
-        <button
-          type="submit"
-          disabled={state.submitting}
-          className={`w-full py-3 rounded-lg font-semibold text-gray-900 bg-yellow-400 hover:scale-105 transition ${
-            state.submitting ? "opacity-50 cursor-not-allowed" : ""
-          }`}
-        >
-          {state.submitting ? "Sending..." : "Send Message"}
-        </button>
-
-        {/* optional: show form-level errors */}
-        <ValidationError
-          errors={state.errors}
-          className="text-sm text-red-500"
+        {/* Profile Picture with floating effect */}
+        <motion.img
+          src="https://via.placeholder.com/200" // 👉 replace with your picture
+          alt="Smaksh Gupta"
+          className="w-48 h-48 rounded-full border-4 border-yellow-400 shadow-xl object-cover"
+          animate={{ y: [0, -15, 0] }}
+          transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
         />
-      </form>
+
+        {/* Contact Info */}
+        <motion.div
+          className="text-center md:text-left text-white space-y-6"
+          initial={{ opacity: 0, x: 80 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h2 className="text-5xl font-bold text-yellow-400">Get In Touch</h2>
+          <motion.p
+            className="text-lg text-gray-300 max-w-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+          >
+            I’d love to hear from you! Whether it’s a freelance project,
+            collaboration, or just a tech chat, feel free to connect.
+          </motion.p>
+
+          <motion.div
+            className="space-y-3 text-lg"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 1 }}
+          >
+            <p>
+              📧{" "}
+              <a
+                href="mailto:smakshgupta55@gmail.com"
+                className="font-semibold text-yellow-300 hover:text-yellow-400 transition"
+              >
+                smakshgupta55@gmail.com
+              </a>
+            </p>
+            <p>
+              📱{" "}
+              <a
+                href="tel:+916006332447"
+                className="font-semibold text-yellow-300 hover:text-yellow-400 transition"
+              >
+                +91 6006332447
+              </a>
+            </p>
+            <p>
+              🔗{" "}
+              <a
+                href="https://www.linkedin.com/in/smaksh-gupta"
+                target="_blank"
+                rel="noreferrer"
+                className="text-yellow-300 hover:text-yellow-400 transition"
+              >
+                LinkedIn
+              </a>{" "}
+              |{" "}
+              <a
+                href="https://github.com/Smakshg"
+                target="_blank"
+                rel="noreferrer"
+                className="text-yellow-300 hover:text-yellow-400 transition"
+              >
+                GitHub
+              </a>
+            </p>
+          </motion.div>
+
+          {/* Call to Action Button with glowing pulse */}
+          <motion.a
+            href="mailto:smakshgupta55@gmail.com"
+            className="inline-block bg-yellow-400 text-gray-900 font-bold px-8 py-4 rounded-lg shadow-lg hover:scale-105 transition relative"
+            whileHover={{ scale: 1.1 }}
+          >
+            Say Hello 👋
+            <span className="absolute inset-0 rounded-lg bg-yellow-400 opacity-50 blur-lg animate-ping -z-10"></span>
+          </motion.a>
+        </motion.div>
+      </motion.div>
     </section>
   );
 }
-
-
-
