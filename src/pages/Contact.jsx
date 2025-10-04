@@ -1,6 +1,5 @@
 import { motion } from "framer-motion";
-import profilePic from "../IMG-20250930-WA0017.jpg";
-
+import profilePic from "../assets/IMG-20250930-WA0017.jpg";
 export default function Contact() {
   return (
     <section className="min-h-screen bg-gradient-to-br from-purple-900 via-indigo-900 to-black flex items-center justify-center px-6 relative overflow-hidden">
