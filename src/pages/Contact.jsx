@@ -23,7 +23,7 @@ export default function Contact() {
       >
         {/* Profile Picture with floating effect */}
         <motion.img
-          src="https://via.placeholder.com/200" // 👉 replace with your picture
+          src="../IMG-20250930-WA0017.jpg" // 👉 replace with your picture
           alt="Smaksh Gupta"
           className="w-48 h-48 rounded-full border-4 border-yellow-400 shadow-xl object-cover"
           animate={{ y: [0, -15, 0] }}
@@ -108,3 +108,4 @@ export default function Contact() {
     </section>
   );
 }
+
