@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import profilePic from "../IMG-20250930-WA0017.jpg";
 
 export default function Contact() {
   return (
@@ -108,5 +109,6 @@ export default function Contact() {
     </section>
   );
 }
+
 
 
